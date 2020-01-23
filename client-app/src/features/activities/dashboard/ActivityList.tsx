@@ -6,7 +6,13 @@ import { Link } from 'react-router-dom';
 
 const ActivityList: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const {activitiesByDate, selectActivity, deleteActivity, submitting, target} = activityStore;
+  const {
+    activitiesByDate,
+    selectActivity,
+    deleteActivity,
+    submitting,
+    target
+  } = activityStore;
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -23,9 +29,8 @@ const ActivityList: React.FC = () => {
               </Item.Description>
               <Item.Extra>
                 <Button
-                  as={Link} 
+                  as={Link}
                   exact to={`/activities/${activity.id}`}
-                  // onClick={() => selectActivity(activity.id)}
                   floated='right'
                   content='View'
                   color='blue'
