@@ -1,10 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from '../models/activity';
 import { history } from '../..';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:5000/api'
 
 axios.interceptors.response.use(undefined, error => {
+    if (error.message === 'Network Error' && !error.response)
+    {
+        toast.info('Cannot connect - dotnet watch run');
+    }
     const {status, data, config} = error.response;
 
     if (status === 404)
@@ -17,9 +22,9 @@ axios.interceptors.response.use(undefined, error => {
        history.push('/notfound');
     }
 
-    if (status === 500 && config.method === 'get' && data.errors.hasOwnProperty('id')) 
+    if (status === 500 ) 
     {
-       history.push('/notfound');
+       toast.error('Server says check terminal');
     }
 
 })
