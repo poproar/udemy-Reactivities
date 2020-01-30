@@ -140,20 +140,20 @@ class ActivityStore {
     }
   }
 
-  @action pushActivities = () => {
-    this.loadingInitial = true;
-    agent.Activities.list()
-      .then(activities => {
-        runInAction('load activities then', () => {
-          activities.forEach((activity) => {
-            activity.date = activity.date.split('.')[0]
-            this.activityRegistry.set(activity.id, activity);
-          })
-        });
-      })
-      .catch((error) => runInAction('load activities error', () => console.error(error)))
-      .finally(() => runInAction('load activities finally', () => this.loadingInitial = false));
-  };
+  // @action pushActivities = () => {
+  //   this.loadingInitial = true;
+  //   agent.Activities.list()
+  //     .then(activities => {
+  //       runInAction('load activities then', () => {
+  //         activities.forEach((activity) => {
+  //           activity.date = activity.date.split('.')[0]
+  //           this.activityRegistry.set(activity.id, activity);
+  //         })
+  //       });
+  //     })
+  //     .catch((error) => runInAction('load activities error', () => console.error(error)))
+  //     .finally(() => runInAction('load activities finally', () => this.loadingInitial = false));
+  // };
 
   @action pushActivity = async (id: string) => {
     let activity = this.activityRegistry.get(id);
