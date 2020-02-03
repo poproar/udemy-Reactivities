@@ -20,7 +20,7 @@ const Homepage = () => {
         </Header>
         {isLoggedIn && user ? (
           <Fragment>
-            <Header as='h2' inverted content={`Get Reactive, ${user.displayname}`} />
+            <Header as='h2' inverted content={`Get Reactive, ${user.displayName}`} />
             <Button as={Link} to='/activities' size='huge' inverted>Go</Button>
           </Fragment>
         ) : (
