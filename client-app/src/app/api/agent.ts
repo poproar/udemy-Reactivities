@@ -6,6 +6,14 @@ import { IUserFormValues, IUser } from '../models/user';
 
 axios.defaults.baseURL = 'http://localhost:5000/api'
 
+axios.interceptors.request.use((config) => {
+    const token = window.localStorage.getItem('jwt');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+}, error => {
+    return Promise.reject(error);
+})
+
 axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response)
     {
@@ -15,21 +23,21 @@ axios.interceptors.response.use(undefined, error => {
 
     if (status === 404)
     {
-       history.push('/notfound');
+        history.push('/notfound');
     }
 
-    if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) 
+    if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id'))
     {
-       history.push('/notfound');
+        history.push('/notfound');
     }
 
-    if (status === 500 ) 
+    if (status === 500 )
     {
-       toast.error('Server says check terminal');
+        toast.error('Server says check terminal');
     }
-    
+
     throw error.response;
-
+    
 })
 
 const responseBody = (response : AxiosResponse) => response.data;
@@ -40,7 +48,7 @@ const requests = {
     get: (url: string) => axios.get(url).then(sleep(800)).then(responseBody),
     post: (url: string, body: {}) => axios.post(url, body).then(sleep(800)).then(responseBody),
     put: (url: string, body: {}) => axios.put(url, body).then(sleep(800)).then(responseBody),
-    del: (url: string) => axios.delete(url).then(sleep(800)).then(responseBody)
+    del: (url: string) => axios.delete(url).then(sleep(800)).then(responseBody) 
 }
 
 const Activities = {
@@ -53,8 +61,8 @@ const Activities = {
 
 const User = {
     current: (): Promise<IUser> => requests.get(`/user`),
-    login: (user: IUserFormValues): Promise<IUser> => requests.post(`user/login`, user),
-    register: (user: IUserFormValues): Promise<IUser> => requests.post(`user/register`, user),
+    login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
+    register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user),
 }
 
 export default {
