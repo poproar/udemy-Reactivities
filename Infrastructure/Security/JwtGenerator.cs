@@ -19,7 +19,7 @@ namespace Infrastructure.Security
             };
 
             // generate signing credentials
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKeymustbealotlonger"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
