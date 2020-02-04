@@ -41,7 +41,12 @@ const RegisterForm = () => {
             color='teal'
             textAlign='center'
           />
-          <Field name='username' component={TextInput} placeholder='Username' />
+          <Field 
+            name='username' 
+            component={TextInput} 
+            placeholder='Username'
+            autocomplete="username"
+          />
           <Field
             name='displayName'
             component={TextInput}
@@ -52,6 +57,7 @@ const RegisterForm = () => {
             name='password'
             component={TextInput}
             placeholder='Password'
+            autocomplete="current-password"
             type='password'
           />
           {submitError && !dirtySinceLastSubmit && (
