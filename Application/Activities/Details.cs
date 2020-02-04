@@ -13,7 +13,7 @@ namespace Application.Activities
 {
     public class Details
     {
-        public class Query : IRequest<Activity>
+        public class Query : IRequest<ActivityDto>
         {
             public Guid Id { get; set; }
         }
@@ -34,15 +34,14 @@ namespace Application.Activities
                     .Include(x => x.UserActivities)
                     .ThenInclude(x => x.AppUser)
                     .SingleOrDefaultAsync(x => x.Id == request.Id);
+                    // .FindAsync(request.Id);
 
                 if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not Found" });
+                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Not found" });
 
                 var activityToReturn = _mapper.Map<Activity, ActivityDto>(activity);
 
                 return activityToReturn;
-
-                // throw new System.NotImplementedException();
             }
         }
     }
