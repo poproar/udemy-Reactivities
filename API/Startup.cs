@@ -104,7 +104,7 @@ namespace API
                             }
                             return Task.CompletedTask;
                         }
-                    }
+                    };
                 }
             );
 
