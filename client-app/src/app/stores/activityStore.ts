@@ -35,10 +35,10 @@ export default class ActivityStore {
       (a, b) => a.date.getTime() - b.date.getTime()
     )
     return Object.entries(sortedActivities.reduce((activities, activity) => {
-          const date = activity.date.toISOString().split('T')[0];
-          activities[date] = activities[date] ? [...activities[date], activity] : [activity];
-          return activities;
-        }, {} as {[key: string]: IActivity[]}));
+      const date = activity.date.toISOString().split('T')[0];
+      activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+      return activities;
+    }, {} as { [key: string]: IActivity[] }));
   }
 
   @action loadActivities = async () => {
@@ -69,7 +69,7 @@ export default class ActivityStore {
       this.loadingInitial = true;
       try {
         activity = await agent.Activities.details(id);
-        runInAction('getting activity',() => {
+        runInAction('getting activity', () => {
           setActivityProps(activity, this.rootStore.userStore.user!);
           this.activity = activity;
           this.activityRegistry.set(activity.id, activity);
@@ -202,8 +202,8 @@ export default class ActivityStore {
     this.hubConnection = new HubConnectionBuilder().withUrl('http://localhost:5000/chat', {
       accessTokenFactory: () => this.rootStore.commonStore.token!
     })
-    .configureLogging(LogLevel.Information)
-    .build();
+      .configureLogging(LogLevel.Information)
+      .build();
 
     this.hubConnection.start().then(() => console.log(this.hubConnection!.state)).catch(error => console.error('Error esablishing connection: ', error));
     this.hubConnection.on('ReceiveComment', comment => {
@@ -213,5 +213,16 @@ export default class ActivityStore {
 
   @action stopHubConnection = () => {
     this.hubConnection!.stop();
-    };
+  };
+
+  @action addComment = async (values: any) => {
+    values.activityId = this.activity!.id;
+    try {
+      await this.hubConnection!.invoke('SendComment', values)
+    } catch (error) {
+      console.log(error)
+    }
+    
+  };
+
 }
