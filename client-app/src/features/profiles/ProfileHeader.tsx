@@ -10,8 +10,13 @@ import {
   Reveal
 } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
+import { IProfile } from '../../app/models/profile';
 
-const ProfileHeader = () => {
+interface IProps {
+  profile: IProfile
+}
+
+const ProfileHeader: React.FC<IProps> = ({profile}) => {
   return (
     <Segment>
       <Grid>
