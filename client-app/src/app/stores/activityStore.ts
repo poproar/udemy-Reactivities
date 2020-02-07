@@ -199,23 +199,41 @@ export default class ActivityStore {
     }
   };
 
-  @action createHubConnection = () => {
+  @action createHubConnection = (activityId: string) => {
     this.hubConnection = new HubConnectionBuilder().withUrl('http://localhost:5000/chat', {
       accessTokenFactory: () => this.rootStore.commonStore.token!
     })
       .configureLogging(LogLevel.Information)
       .build();
 
-    this.hubConnection.start().then(() => console.log(this.hubConnection!.state)).catch(error => console.error('Error esablishing connection: ', error));
+    this.hubConnection
+      .start()
+      .then(() => console.log(this.hubConnection!.state))
+      .then(() => {
+        console.log('Attempting to add Group');
+        this.hubConnection!.invoke('AddToGroup', activityId)
+      })
+      .catch(error => console.error('Error esablishing connection: ', error));
+
     this.hubConnection.on('ReceiveComment', comment => {
       runInAction(() => {
-        this.activity!.comments.push(comment);
+        this.activity!.comments.push(comment)
       })
+    })
+
+    this.hubConnection.on('Send', message => {
+      toast.info(message);
     })
   };
 
   @action stopHubConnection = () => {
-    this.hubConnection!.stop();
+    this.hubConnection!.invoke('RemoveFromGroup', this.activity!.id)
+      .then(() => {
+        this.hubConnection!.stop();
+
+      })
+      .then(() => console.log('Connection Stopped'))
+      .then((err) => console.error(err));
   };
 
   @action addComment = async (values: any) => {
@@ -225,7 +243,7 @@ export default class ActivityStore {
     } catch (error) {
       console.log(error)
     }
-    
+
   };
 
 }
