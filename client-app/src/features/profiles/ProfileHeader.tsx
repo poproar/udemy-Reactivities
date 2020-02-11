@@ -40,7 +40,7 @@ const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follo
             <Statistic label='Following' value={profile.followingCount} />
           </Statistic.Group>
           <Divider />
-          {!isCurrentUser && 
+          {!isCurrentUser && (
           <Reveal animated='move'>
             <Reveal.Content visible style={{ width: '100%' }}>
               <Button fluid color='teal' content={profile.following ? 'Following' : 'Not following'} />
@@ -59,7 +59,7 @@ const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follo
                   }
               />
             </Reveal.Content>
-          </Reveal>}
+          </Reveal>)}
         </Grid.Column>
       </Grid>
     </Segment>
