@@ -1,5 +1,5 @@
 declare module 'react-cropper' {
-    import * as cropperjs from 'cropperjs';
+    import * as cropperjs from 'cropperjs@1.1.5';
     import * as React from 'react';
     
     type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
@@ -13,6 +13,4 @@ declare module 'react-cropper' {
         on(eventname: string, callback: () => void): void;
     }
     export default ReactCropper;
-}
-
-
+  }
