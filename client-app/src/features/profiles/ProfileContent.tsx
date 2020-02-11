@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement } from 'react';
 import {Tab} from 'semantic-ui-react';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileDescription from './ProfileDescription';
@@ -9,7 +9,7 @@ const panes = [
     {menuItem: 'Photos', render: () => <ProfilePhotos />},
     {menuItem: 'Activities', render: () => <Tab.Pane>Activities content</Tab.Pane>},
     {menuItem: 'Followers', render: () => <ProfileFollowings />},
-    {menuItem: 'Following', render: () => <ProfileFollowings />},
+    {menuItem: 'Following', render: () => <ProfileFollowings />}
 ]
 
 interface IProps {
@@ -27,4 +27,4 @@ const ProfileContent: React.FC<IProps> = ({setActiveTab}) => {
     )
 }
 
-export default ProfileContent
+export default ProfileContent;
