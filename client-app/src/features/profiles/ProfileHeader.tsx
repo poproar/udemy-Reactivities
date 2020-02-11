@@ -13,10 +13,14 @@ import { observer } from 'mobx-react-lite';
 import { IProfile } from '../../app/models/profile';
 
 interface IProps {
-  profile: IProfile
+  profile: IProfile,
+  isCurrentUser: boolean,
+  loading: boolean,
+  follow: (username: string) => void,
+  unfollow: (username: string) => void
 }
 
-const ProfileHeader: React.FC<IProps> = ({profile}) => {
+const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follow, unfollow}) => {
   return (
     <Segment>
       <Grid>
@@ -36,19 +40,26 @@ const ProfileHeader: React.FC<IProps> = ({profile}) => {
             <Statistic label='Following' value={profile.followingCount} />
           </Statistic.Group>
           <Divider />
+          {!isCurrentUser && 
           <Reveal animated='move'>
             <Reveal.Content visible style={{ width: '100%' }}>
-              <Button fluid color='teal' content='Following' />
+              <Button fluid color='teal' content={profile.following ? 'Following' : 'Not following'} />
             </Reveal.Content>
             <Reveal.Content hidden>
               <Button
+              loading={loading}
                 fluid
                 basic
-                color={true ? 'red' : 'green'}
-                content={true ? 'Unfollow' : 'Follow'}
+                color={profile.following ? 'red' : 'green'}
+                content={profile.following ? 'Unfollow' : 'Follow'}
+                onClick={
+                  profile.following 
+                    ? () => unfollow(profile.username) 
+                    : () => follow(profile.username)
+                  }
               />
             </Reveal.Content>
-          </Reveal>
+          </Reveal>}
         </Grid.Column>
       </Grid>
     </Segment>
