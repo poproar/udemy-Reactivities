@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import {Tab} from 'semantic-ui-react';
 import ProfilePhotos from './ProfilePhotos';
 import ProfileDescription from './ProfileDescription';
@@ -12,12 +12,17 @@ const panes = [
     {menuItem: 'Following', render: () => <ProfileFollowings />},
 ]
 
-const ProfileContent = () => {
+interface IProps {
+    setActiveTab: (activeIndex: any) => void;
+}
+
+const ProfileContent: React.FC<IProps> = ({setActiveTab}) => {
     return (
         <Tab 
             menu={{fluid: true, vertical: true}}
             menuPosition='right'
             panes={panes}
+            onTabChange={(event, data) => setActiveTab(data.activeIndex)}
         />
     )
 }
