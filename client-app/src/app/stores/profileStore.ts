@@ -9,6 +9,17 @@ export default class ProfileStore {
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
 
+    reaction(
+        () => this.activeTab,
+        activeTab => {
+            if (activeTab === 3 || activeTab === 4) {
+                const predicate = activeTab === 3 ? 'followers' : 'following';
+                this.loadFollowings(predicate)
+            } else {
+                this.followings = [];
+            }
+        }
+    )
   }
 
   @observable profile: IProfile | null = null;
@@ -150,6 +161,25 @@ export default class ProfileStore {
       });
     } catch (error) {
       toast.error('Problem unfollowing user');
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  };
+
+  @action loadFollowings = async (predicate: string) => {
+    this.loading = true;
+    try {
+      const profiles = await agent.Profiles.listFollowings(
+        this.profile!.username,
+        predicate
+      );
+      runInAction(() => {
+          this.followings = profiles;
+          this.loading = false;
+      })
+    } catch (error) {
+      toast.error('Problem loading followings');
       runInAction(() => {
         this.loading = false;
       });
