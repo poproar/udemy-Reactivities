@@ -3,7 +3,6 @@ import { IActivity } from '../models/activity';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { IUserFormValues, IUser } from '../models/user';
-import { request } from 'http';
 import { IProfile, IPhoto } from '../models/profile';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
