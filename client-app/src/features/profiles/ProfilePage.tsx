@@ -8,7 +8,7 @@ import LoadingComponent from '../../app/layout/LoadingComponent';
 import { observer } from 'mobx-react-lite';
 
 interface RouteParams {
-    username: string
+    username: string;
 }
 
 interface IProps extends RouteComponentProps<RouteParams> {}

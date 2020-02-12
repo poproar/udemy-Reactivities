@@ -13,11 +13,11 @@ import { observer } from 'mobx-react-lite';
 import { IProfile } from '../../app/models/profile';
 
 interface IProps {
-  profile: IProfile,
-  isCurrentUser: boolean,
-  loading: boolean,
-  follow: (username: string) => void,
-  unfollow: (username: string) => void
+  profile: IProfile;
+  isCurrentUser: boolean;
+  loading: boolean;
+  follow: (username: string) => void;
+  unfollow: (username: string) => void;
 }
 
 const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follow, unfollow}) => {
