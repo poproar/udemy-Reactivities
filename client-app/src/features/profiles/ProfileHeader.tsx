@@ -68,8 +68,8 @@ const ProfileHeader: React.FC<IProps> = ({
                   content={profile.following ? 'Unfollow' : 'Follow'}
                   onClick={
                     profile.following
-                      ? () => unfollow(profile.username)
-                      : () => follow(profile.username)
+                      ? () => unfollow(profile.userName)
+                      : () => follow(profile.userName)
                   }
                 />
               </Reveal.Content>

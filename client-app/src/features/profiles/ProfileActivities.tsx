@@ -22,7 +22,7 @@ const ProfileEvents = () => {
   } = rootStore.profileStore!;
 
   useEffect(() => {
-    loadUserActivities(profile!.username);
+    loadUserActivities(profile!.userName);
   }, [loadUserActivities, profile]);
 
   const handleTabChange = (
@@ -41,7 +41,7 @@ const ProfileEvents = () => {
         predicate = 'future';
         break;
     }
-    loadUserActivities(profile!.username, predicate);
+    loadUserActivities(profile!.userName, predicate);
   };
 
   return (

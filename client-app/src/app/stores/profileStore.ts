@@ -33,7 +33,7 @@ export default class ProfileStore {
 
   @computed get isCurrentUser() {
     if (this.rootStore.userStore.user && this.profile) {
-      return this.rootStore.userStore.user.username === this.profile.username;
+      return this.rootStore.userStore.user.userName === this.profile.userName;
     } else {
       return false;
     }
@@ -189,7 +189,7 @@ export default class ProfileStore {
     this.loading = true;
     try {
       const profiles = await agent.Profiles.listFollowings(
-        this.profile!.username,
+        this.profile!.userName,
         predicate
       );
       runInAction(() => {
