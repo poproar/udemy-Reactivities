@@ -11,7 +11,7 @@ interface IProps {
 
 const PhotoUploadWidget: React.FC<IProps> = ({ loading, uploadPhoto }) => {
   const [files, setFiles] = useState<any[]>([]);
-  const [image, setImage] = useState<Blob | null>(null);
+  const [image] = useState<Blob | null>(null);
 
   useEffect(() => {
     return () => {
