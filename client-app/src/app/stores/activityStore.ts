@@ -64,7 +64,7 @@ export default class ActivityStore {
   }
 
   @action setPage = (page: number) => {
-    this.page = page
+    this.page = page;
   }
 
   @computed get activitiesByDate() {

@@ -13,7 +13,7 @@ axios.interceptors.request.use((config) => {
     return config;
 }, error => {
     return Promise.reject(error);
-})
+});
 
 axios.interceptors.response.use(undefined, error => {
     if (error.message === 'Network Error' && !error.response) {
@@ -30,7 +30,7 @@ axios.interceptors.response.use(undefined, error => {
         toast.error('Server error - check the terminal for more info!')
     }
     throw error.response;
-})
+});
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -60,13 +60,13 @@ const Activities = {
     delete: (id: string) => requests.del(`/activities/${id}`),
     attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
     unattend: (id: string) => requests.del(`/activities/${id}/attend`)
-}
+};
 
 const User = {
     current: (): Promise<IUser> => requests.get('/user'),
     login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
     register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user),
-}
+};
 
 const Profiles = {
     get: (username: string): Promise<IProfile> => requests.get(`/profiles/${username}`),
@@ -77,10 +77,10 @@ const Profiles = {
     follow: (username: string) => requests.post(`/profiles/${username}/follow`, {}),
     unfollow: (username: string) => requests.del(`/profiles/${username}/follow`),
     listFollowings: (username: string, predicate: string) => requests.get(`/profiles/${username}/follow?predicate=${predicate}`)
-}
+};
 
 export default {
     Activities,
     User,
     Profiles
-}
+};
